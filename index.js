@@ -11,7 +11,7 @@ http.createServer((req, res) => {
 const bot = Mineflayer.createBot({
   host: 'flaxsmp.mcsh.io',
   port: 25565,
-  username: 'Flax_AFK_Bot', 
+  username: 'FlaxBot247', // Шинэ, хэзээ ч орж байгаагүй цоо шинэ нэр
   version: '1.21.1',
   auth: 'offline'
 });
@@ -19,17 +19,17 @@ const bot = Mineflayer.createBot({
 bot.on('spawn', () => {
   console.log('Бот сервер рүү амжилттай орлоо!');
   
-  // Хэрэв бот серверт анх удаа орж байгаа бол шууд бүртгүүлнэ (Уг команд 2 секундын дараа ажиллана)
+  // FlexLoginUI-д зориулж оронгуут нь шууд бүртгүүлэх команд (1.5 секундын дараа)
   setTimeout(() => {
-    bot.chat('/register FlaxBot1234 FlaxBot1234');
-  }, 2000);
+    bot.chat('/register FlaxPass247 FlaxPass247');
+  }, 1500);
 
-  // Хэрэв өмнө нь бүртгүүлчихсэн бол шууд нэвтэрнэ (Уг команд 3 секундын дараа ажиллана)
+  // Хэрэв өмнө нь бүртгүүлсэн бол шууд нэвтрэх команд (2.5 секундын дараа)
   setTimeout(() => {
-    bot.chat('/login FlaxBot1234');
-  }, 3000);
+    bot.chat('/login FlaxPass247');
+  }, 2550);
 
-  // 1.21.1 хувилбарын хөдөлгөөн хуурах систем (5 секунд тутамд)
+  // Хөдөлгөөн хийж Anticheat болон унтахаас сэргийлэх (5 секунд тутамд)
   setInterval(() => {
     if (!bot || !bot.entity) return;
     const directions = ['forward', 'back', 'left', 'right'];
@@ -43,17 +43,13 @@ bot.on('spawn', () => {
   }, 5000);
 });
 
-// Хэрэв AuthMe чат дээр заавар харуулбал түүнийг хянах
 bot.on('message', (jsonMsg) => {
-  const message = jsonMsg.toString();
-  console.log(`[Чат]: ${message}`);
+  console.log(`[Чат]: ${jsonMsg.toString()}`);
 });
 
 bot.on('end', (reason) => {
   console.log(`Бот холболт тасарлаа (${reason}). 15 секундын дараа дахин оролдоно...`);
-  setTimeout(() => {
-    process.exit(1); // Render ботыг дахин автоматаар ажиллуулна
-  }, 15000);
+  setTimeout(() => { process.exit(1); }, 15000);
 });
 
 bot.on('error', (err) => console.log('Алдаа гарлаа:', err));
