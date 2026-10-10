@@ -9,9 +9,9 @@ http.createServer((req, res) => {
 
 // Ботын үндсэн тохиргоо
 const bot = Mineflayer.createBot({
-  host: 'flaxsmp.mcsh.io', // Таны серверийн IP
-  port: 25565,             // Порт
-  username: 'Flax_AFK_Bot', // Бот серверт орох нэр
+  host: 'flaxsmp.mcsh.io',
+  port: 25565,
+  username: 'Flax_AFK_Bot', 
   version: '1.21.1',
   auth: 'offline'
 });
@@ -19,44 +19,38 @@ const bot = Mineflayer.createBot({
 bot.on('spawn', () => {
   console.log('Бот сервер рүү амжилттай орлоо!');
   
-  // Sonar Anti-Bot-ыг хуурахын тулд 4 секунд тутамд бага зэрэг хөдөлгөөн хийнэ
+  // Хэрэв бот серверт анх удаа орж байгаа бол шууд бүртгүүлнэ (Уг команд 2 секундын дараа ажиллана)
+  setTimeout(() => {
+    bot.chat('/register FlaxBot1234 FlaxBot1234');
+  }, 2000);
+
+  // Хэрэв өмнө нь бүртгүүлчихсэн бол шууд нэвтэрнэ (Уг команд 3 секундын дараа ажиллана)
+  setTimeout(() => {
+    bot.chat('/login FlaxBot1234');
+  }, 3000);
+
+  // 1.21.1 хувилбарын хөдөлгөөн хуурах систем (5 секунд тутамд)
   setInterval(() => {
     if (!bot || !bot.entity) return;
-    
-    // Санамсаргүй байдлаар урагшаа эсвэл хойшоо нэг алхах
     const directions = ['forward', 'back', 'left', 'right'];
     const randomDir = directions[Math.floor(Math.random() * directions.length)];
-    
     bot.setControlState(randomDir, true);
-    setTimeout(() => {
-      bot.clearControlStates();
-    }, 300); // 0.3 секунд алхаад зогсоно
+    setTimeout(() => { bot.clearControlStates(); }, 300);
     
-    // Толгойгоо бага зэрэг эргүүлж жинхэнэ хүн шиг харагдуулах
     const yaw = (Math.random() - 0.5) * 2;
     const pitch = (Math.random() - 0.5) * 2;
     bot.look(yaw, pitch);
-    
-  }, 4000); // 4 секунд тутамд давтагдана
+  }, 5000);
 });
 
-// Хэрэв Sonar чат дээр ямар нэгэн тушаал бичихийг шаардвал автоматаар чат бичих үйлдэл
+// Хэрэв AuthMe чат дээр заавар харуулбал түүнийг хянах
 bot.on('message', (jsonMsg) => {
   const message = jsonMsg.toString();
   console.log(`[Чат]: ${message}`);
-  
-  // Хэрэв серверт нэвтрэхэд нууц үг (AuthMe) нэмэлтээр шаарддаг бол доорх хэсгийг ашиглана:
-  // Жишээ нь: чат дээр /register гэж гарч ирвэл
-  if (message.includes('/register')) {
-    bot.chat('/register MyPassword123 MyPassword123');
-  }
-  if (message.includes('/login')) {
-    bot.chat('/login MyPassword123');
-  }
 });
 
 bot.on('end', (reason) => {
-  console.log(`Бот серверээс гарлаа (${reason}). 15 секундын дараа дахин холбогдоно...`);
+  console.log(`Бот холболт тасарлаа (${reason}). 15 секундын дараа дахин оролдоно...`);
   setTimeout(() => {
     process.exit(1); // Render ботыг дахин автоматаар ажиллуулна
   }, 15000);
