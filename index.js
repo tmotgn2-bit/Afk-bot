@@ -11,7 +11,7 @@ http.createServer((req, res) => {
 const bot = Mineflayer.createBot({
   host: 'flaxsmp.mcsh.io',
   port: 25565,
-  username: 'FlaxAFK_Bot_99x', // Таны сүүлд өөрчилсөн нэр
+  username: 'FlaxBot247', // Шинэ, хэзээ ч орж байгаагүй цоо шинэ нэр
   version: '1.21.1',
   auth: 'offline'
 });
@@ -19,11 +19,15 @@ const bot = Mineflayer.createBot({
 bot.on('spawn', () => {
   console.log('Бот сервер рүү амжилттай орлоо!');
   
-  // Сервер рүү оронгуут 1.5 секундын дараа автоматаар /vanish хийнэ
+  // FlexLoginUI-д зориулж оронгуут нь шууд бүртгүүлэх команд (1.5 секундын дараа)
   setTimeout(() => {
-    bot.chat('/vanish');
-    console.log('Бот автоматаар үл үзэгдэгч боллоо (/vanish бичсэн).');
+    bot.chat('/register FlaxPass247 FlaxPass247');
   }, 1500);
+
+  // Хэрэв өмнө нь бүртгүүлсэн бол шууд нэвтрэх команд (2.5 секундын дараа)
+  setTimeout(() => {
+    bot.chat('/login FlaxPass247');
+  }, 2550);
 
   // Хөдөлгөөн хийж Anticheat болон унтахаас сэргийлэх (5 секунд тутамд)
   setInterval(() => {
