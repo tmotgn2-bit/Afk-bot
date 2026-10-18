@@ -9,9 +9,9 @@ http.createServer((req, res) => {
 
 // Ботын үндсэн тохиргоо
 const bot = Mineflayer.createBot({
-  host: 'flaxsmp.mcsh.gg',
+  host: 'flaxsmp.mcsh.gg', // Зөвхөн хаягийг flaxsmp.mcsh.gg болгож өөрчлөв
   port: 25565,
-  username: 'FlaxBot247', // Шинэ, хэзээ ч орж байгаагүй цоо шинэ нэр
+  username: 'FlaxBot247', 
   version: '1.21.1',
   auth: 'offline'
 });
